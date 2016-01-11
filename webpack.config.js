@@ -1,17 +1,17 @@
-var path = require('path');
-var HtmlwebpackPlugin = require('html-webpack-plugin');
-var merge = require('webpack-merge');
-var webpack = require('webpack');
+const path = require('path');
+const HtmlwebpackPlugin = require('html-webpack-plugin');
+const merge = require('webpack-merge');
+const webpack = require('webpack');
 
-//map our app to build/bundle.js and generate build/index.html
 const TARGET = process.env.npm_lifecycle_event;
-const PATHS  = {
+const PATHS = {
   app: path.join(__dirname, 'app'),
   build: path.join(__dirname, 'build')
 };
 
+process.env.BABEL_ENV = TARGET;
+
 const common = {
-  //Entry accepts a path or an object of entries.
   entry: PATHS.app,
   resolve: {
     extensions: ['', '.js', '.jsx']
@@ -23,8 +23,12 @@ const common = {
   module: {
     loaders: [
       {
+        test: /\.css$/,
+        loaders: ['style', 'css'],
+        include: PATHS.app
+      },
+      {
         test: /\.jsx?$/,
-        // test: /\.css$/,
         loaders: ['babel'],
         include: PATHS.app
       }
@@ -32,12 +36,14 @@ const common = {
   },
   plugins: [
     new HtmlwebpackPlugin({
-      title: 'Kanban app'
+      template: 'node_modules/html-webpack-template/index.html',
+      title: 'Kanban app',
+      appMountId: 'app'
     })
   ]
 };
 
-if(TARGET === 'start' || !TARGET){
+if(TARGET === 'start' || !TARGET) {
   module.exports = merge(common, {
     devtool: 'eval-source-map',
     devServer: {
@@ -46,10 +52,11 @@ if(TARGET === 'start' || !TARGET){
       inline: true,
       progress: true,
 
-      //display only errors to reduce the amount of output.
+      // display only errors to reduce the amount of output
       stats: 'errors-only',
 
-      //parse host and port from env so this is easy to customize.
+      // parse host and port from env so this is easy
+      // to customize
       host: process.env.HOST,
       port: process.env.PORT
     },
@@ -59,10 +66,6 @@ if(TARGET === 'start' || !TARGET){
   });
 }
 
-if(TARGET === 'build'){
+if(TARGET === 'build') {
   module.exports = merge(common, {});
 }
-
-
-
-

@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "babel-core": "^6.4.0",
     "babel-eslint": "^4.1.6",
     "babel-loader": "^6.2.1",
     "babel-plugin-syntax-class-properties": "^6.3.13",
@@ -26,6 +27,7 @@
     "eslint": "^1.10.3",
     "eslint-plugin-react": "^3.14.0",
     "html-webpack-plugin": "^1.7.0",
+    "html-webpack-template": "^2.5.2",
     "jshint": "^2.8.0",
     "jshint-loader": "^0.8.3",
     "style-loader": "^0.13.0",
