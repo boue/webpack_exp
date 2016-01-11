@@ -13,6 +13,9 @@ const PATHS  = {
 const common = {
   //Entry accepts a path or an object of entries.
   entry: PATHS.app,
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
   output: {
     path: PATHS.build,
     filename: 'bundle.js'
@@ -20,8 +23,9 @@ const common = {
   module: {
     loaders: [
       {
-        test: /\.css$/,
-        loaders: ['style', 'css'],
+        test: /\.jsx?$/,
+        // test: /\.css$/,
+        loaders: ['babel'],
         include: PATHS.app
       }
     ]
@@ -58,3 +62,7 @@ if(TARGET === 'start' || !TARGET){
 if(TARGET === 'build'){
   module.exports = merge(common, {});
 }
+
+
+
+
